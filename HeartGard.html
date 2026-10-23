@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartGuard - Heart Disease Risk Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .heart-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        
+        .risk-low { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+        .risk-medium { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+        .risk-high { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-heartbeat text-3xl text-red-500 heart-pulse"></i>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">HeartGuard</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-purple-600 transition">Home</a>
+                    <a href="#assessment" class="text-gray-700 hover:text-purple-600 transition">Assessment</a>
+                    <a href="#education" class="text-gray-700 hover:text-purple-600 transition">Learn</a>
+                    <a href="#prevention" class="text-gray-700 hover:text-purple-600 transition">Prevention</a>
+                    <a href="#emergency" class="text-gray-700 hover:text-purple-600 transition">Emergency</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 text-gray-700">Home</a>
+                <a href="#assessment" class="block py-2 text-gray-700">Assessment</a>
+                <a href="#education" class="block py-2 text-gray-700">Learn</a>
+                <a href="#prevention" class="block py-2 text-gray-700">Prevention</a>
+                <a href="#emergency" class="block py-2 text-gray-700">Emergency</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="slide-in">
+                    <h1 class="text-5xl font-bold mb-6">Protect Your Heart Health</h1>
+                    <p class="text-xl mb-8 text-purple-100">Take control of your cardiovascular health with our advanced risk assessment tool. Early detection saves lives.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="scrollToSection('assessment')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-50 transition transform hover:scale-105">
+                            Start Assessment
+                        </button>
+                        <button onclick="scrollToSection('education')" class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
+                            Learn More
+                        </button>
+                    </div>
+                    <div class="mt-8 flex items-center space-x-8">
+                        <div>
+                            <div class="text-3xl font-bold">17.9M</div>
+                            <div class="text-purple-200">Deaths annually</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold">85%</div>
+                            <div class="text-purple-200">Preventable cases</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8">
+                        <i class="fas fa-heart text-9xl text-white/50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Form -->
+    <section id="assessment" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Heart Disease Risk Assessment</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Complete the following questionnaire to evaluate your risk of heart disease. This assessment takes approximately 5 minutes.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-8 shadow-xl">
+                    <form id="assessmentForm" class="space-y-6">
+                        <!-- Personal Information -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-user text-purple-600 mr-2"></i>Personal Information
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                                    <input type="number" id="age" min="1" max="120" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                                    <select id="gender" required
+                                            class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">Select</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Physical Measurements -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-weight text-purple-600 mr-2"></i>Physical Measurements
+                            </h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Height (cm)</label>
+                                    <input type="number" id="height" min="50" max="250" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+                                    <input type="number" id="weight" min="20" max="300" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">BMI</label>
+                                    <input type="number" id="bmi" step="0.1" readonly
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Blood Pressure -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-heartbeat text-purple-600 mr-2"></i>Blood Pressure
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Systolic (mmHg)</label>
+                                    <input type="number" id="systolic" min="70" max="250" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Diastolic (mmHg)</label>
+                                    <input type="number" id="diastolic" min="40" max="150" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cholesterol Levels -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-vial text-purple-600 mr-2"></i>Cholesterol Levels
+                            </h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Total (mg/dL)</label>
+                                    <input type="number" id="cholesterol" min="100" max="400" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">HDL (mg/dL)</label>
+                                    <input type="number" id="hdl" min="20" max="100" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">LDL (mg/dL)</label>
+                                    <input type="number" id="ldl" min="30" max="300" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lifestyle Factors -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-smoking text-purple-600 mr-2"></i>Lifestyle Factors
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Smoking Status</label>
+                                    <select id="smoking" required
+                                            class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">Select</option>
+                                        <option value="never">Never smoked</option>
+                                        <option value="former">Former smoker</option>
+                                        <option value="current">Current smoker</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Physical Activity (minutes/week)</label>
+                                    <input type="number" id="exercise" min="0" max="1000" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Alcohol Consumption (drinks/week)</label>
+                                    <input type="number" id="alcohol" min="0" max="50" required
+                                           class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical History -->
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                                <i class="fas fa-notes-medical text-purple-600 mr-2"></i>Medical History
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Diabetes</label>
+                                    <select id="diabetes" required
+                                            class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">Select</option>
+                                        <option value="no">No</option>
+                                        <option value="prediabetes">Prediabetes</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Family History of Heart Disease</label>
+                                    <select id="familyHistory" required
+                                            class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">Select</option>
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes (before age 55)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center pt-6">
+                            <button type="submit" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition">
+                                <i class="fas fa-calculator mr-2"></i>Calculate Risk Score
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div id="resultCard" class="rounded-2xl p-8 shadow-2xl text-white">
+                    <div class="text-center">
+                        <i class="fas fa-heart text-6xl mb-4"></i>
+                        <h2 class="text-3xl font-bold mb-4">Your Risk Assessment Results</h2>
+                        <div class="text-6xl font-bold mb-4" id="riskScore">0%</div>
+                        <div class="text-2xl mb-6" id="riskLevel">Low Risk</div>
+                        <div class="bg-white/20 backdrop-blur rounded-xl p-6 mb-6">
+                            <p class="text-lg" id="riskMessage">Your risk assessment is complete.</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4 mb-8">
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <i class="fas fa-chart-line text-2xl mb-2"></i>
+                                <div class="font-semibold">Risk Factors</div>
+                                <div id="riskFactors" class="text-sm mt-1">0 identified</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <i class="fas fa-shield-alt text-2xl mb-2"></i>
+                                <div class="font-semibold">Protective Factors</div>
+                                <div id="protectiveFactors" class="text-sm mt-1">0 identified</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <i class="fas fa-calendar-check text-2xl mb-2"></i>
+                                <div class="font-semibold">Next Check-up</div>
+                                <div id="nextCheckup" class="text-sm mt-1">Recommended</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <button onclick="scrollToSection('prevention')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-50 transition">
+                                View Prevention Tips
+                            </button>
+                            <button onclick="downloadResults()" class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
+                                <i class="fas fa-download mr-2"></i>Download Report
+                            </button>
+                            <button onclick="resetAssessment()" class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
+                                Retake Assessment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Understanding Heart Disease</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Learn about cardiovascular health, risk factors, and how to maintain a healthy heart.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="hover-card bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">What is Heart Disease?</h3>
+                    <p class="text-gray-600 mb-4">Heart disease refers to several types of heart conditions, with coronary artery disease being the most common.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-purple-600 mr-2"></i>Plaque buildup in arteries</li>
+                        <li><i class="fas fa-check text-purple-600 mr-2"></i>Reduced blood flow to heart</li>
+                        <li><i class="fas fa-check text-purple-600 mr-2"></i>Can lead to heart attack</li>
+                    </ul>
+                </div>
+
+                <div class="hover-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Major Risk Factors</h3>
+                    <p class="text-gray-600 mb-4">Several factors increase your risk of developing heart disease.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-blue-600 mr-2"></i>High blood pressure</li>
+                        <li><i class="fas fa-check text-blue-600 mr-2"></i>High cholesterol</li>
+                        <li><i class="fas fa-check text-blue-600 mr-2"></i>Smoking</li>
+                        <li><i class="fas fa-check text-blue-600 mr-2"></i>Diabetes</li>
+                        <li><i class="fas fa-check text-blue-600 mr-2"></i>Family history</li>
+                    </ul>
+                </div>
+
+                <div class="hover-card bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-stethoscope text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Warning Signs</h3>
+                    <p class="text-gray-600 mb-4">Recognize these symptoms and seek immediate medical attention.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-600 mr-2"></i>Chest pain or discomfort</li>
+                        <li><i class="fas fa-check text-green-600 mr-2"></i>Shortness of breath</li>
+                        <li><i class="fas fa-check text-green-600 mr-2"></i>Pain in arms, back, neck</li>
+                        <li><i class="fas fa-check text-green-600 mr-2"></i>Nausea or lightheadedness</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="mt-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8 text-white">
+                <h3 class="text-2xl font-bold mb-6 text-center">Heart Disease Statistics</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-4xl font-bold mb-2">1 in 4</div>
+                        <div class="text-purple-200">Deaths caused by heart disease</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">655,000</div>
+                        <div class="text-purple-200">Americans die annually</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">80%</div>
+                        <div class="text-purple-200">Preventable through lifestyle</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">$219B</div>
+                        <div class="text-purple-200">Annual healthcare cost</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prevention Tips -->
+    <section id="prevention" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Prevention Strategies</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Simple lifestyle changes can significantly reduce your risk of heart disease.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-apple-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Healthy Diet</h3>
+                    <p class="text-gray-600 mb-4">Eat a balanced diet rich in fruits, vegetables, whole grains, and lean proteins.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-leaf text-green-500 mr-2"></i>
+                            <span>5+ servings of fruits/vegetables daily</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-fish text-blue-500 mr-2"></i>
+                            <span>Omega-3 rich foods twice weekly</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-ban text-red-500 mr-2"></i>
+                            <span>Limit saturated fats and sodium</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-running text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Regular Exercise</h3>
+                    <p class="text-gray-600 mb-4">Stay active with at least 150 minutes of moderate-intensity exercise weekly.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-walking text-green-500 mr-2"></i>
+                            <span>30 minutes daily walking</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-dumbbell text-purple-500 mr-2"></i>
+                            <span>Strength training 2x per week</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-heart text-red-500 mr-2"></i>
+                            <span>Cardiovascular activities</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-weight text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Weight Management</h3>
+                    <p class="text-gray-600 mb-4">Maintain a healthy BMI between 18.5 and 24.9 to reduce heart disease risk.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+                            <span>Monitor BMI regularly</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-ruler text-green-500 mr-2"></i>
+                            <span>Waist circumference < 40" (men)</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-balance-scale text-orange-500 mr-2"></i>
+                            <span>Gradual weight loss if overweight</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-smoking-ban text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Quit Smoking</h3>
+                    <p class="text-gray-600 mb-4">Smoking is a major risk factor. Quitting can immediately benefit your heart health.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-clock text-blue-500 mr-2"></i>
+                            <span>Benefits start within 20 minutes</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-lungs text-green-500 mr-2"></i>
+                            <span>Lung function improves in weeks</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-heart text-red-500 mr-2"></i>
+                            <span>Heart attack risk drops 50% in 1 year</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bed text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Quality Sleep</h3>
+                    <p class="text-gray-600 mb-4">Aim for 7-9 hours of quality sleep each night for optimal heart health.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-moon text-purple-500 mr-2"></i>
+                            <span>Consistent sleep schedule</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-mobile-alt text-red-500 mr-2"></i>
+                            <span>No screens before bed</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-door-closed text-blue-500 mr-2"></i>
+                            <span>Dark, quiet sleep environment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-lg hover-card">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Stress Management</h3>
+                    <p class="text-gray-600 mb-4">Chronic stress can damage your heart. Practice relaxation techniques daily.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-spa text-green-500 mr-2"></i>
+                            <span>Meditation or yoga</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-users text-blue-500 mr-2"></i>
+                            <span>Social connections</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-laugh text-yellow-500 mr-2"></i>
+                            <span>Regular leisure activities</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section id="emergency" class="py-16 bg-red-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-8">
+                        <h2 class="text-3xl font-bold mb-4">
+                            <i class="fas fa-ambulance mr-3"></i>Emergency Information
+                        </h2>
+                        <p class="text-lg">Know the signs of a heart attack and act immediately. Every minute counts.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 text-gray-800">Heart Attack Symptoms</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                        <span class="text-gray-600">Chest discomfort - pressure, squeezing, fullness</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                        <span class="text-gray-600">Pain or discomfort in arms, back, neck, jaw, stomach</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                        <span class="text-gray-600">Shortness of breath with or without chest discomfort</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                        <span class="text-gray-600">Breaking out in a cold sweat, nausea, lightheadedness</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 text-gray-800">What to Do</h3>
+                                <div class="space-y-4">
+                                    <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                                        <div class="font-semibold text-red-700 mb-1">Call 911 Immediately</div>
+                                        <div class="text-sm text-gray-600">Don't wait more than 5 minutes</div>
+                                    </div>
+                                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                                        <div class="font-semibold text-blue-700 mb-1">Chew Aspirin</div>
+                                        <div class="text-sm text-gray-600">If not allergic, chew one 325mg tablet</div>
+                                    </div>
+                                    <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                                        <div class="font-semibold text-green-700 mb-1">Stay Calm & Rest</div>
+                                        <div class="text-sm text-gray-600">Sit or lie down while waiting for help</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-gray-100 rounded-lg p-6 text-center">
+                            <div class="text-4xl font-bold text-red-600 mb-2">911</div>
+                            <div class="text-gray-600">Emergency Medical Services</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-heartbeat text-2xl text-red-500"></i>
+                        <span class="text-xl font-bold">HeartGuard</span>
+                    </div>
+                    <p class="text-gray-400">Your partner in cardiovascular health awareness and prevention.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#assessment" class="hover:text-white transition">Risk Assessment</a></li>
+                        <li><a href="#education" class="hover:text-white transition">Learn More</a></li>
+                        <li><a href="#prevention" class="hover:text-white transition">Prevention Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">American Heart Association</a></li>
+                        <li><a href="#" class="hover:text-white transition">CDC Heart Disease</a></li>
+                        <li><a href="#" class="hover:text-white transition">NIH Cardiovascular Health</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Disclaimer</h4>
+                    <p class="text-gray-400 text-sm">This tool is for educational purposes only and not a substitute for professional medical advice. Always consult with healthcare providers.</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 HeartGuard. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Medical Disclaimer Modal -->
+    <div id="disclaimerModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                        Important Medical Disclaimer
+                    </h3>
+                    <button onclick="closeDisclaimer()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="space-y-4 text-gray-600">
+                    <p><strong>This Heart Disease Risk Assessment tool is for educational and informational purposes only.</strong></p>
+                    <p>The results provided by this assessment are <strong>not</strong> a medical diagnosis and should <strong>not</strong> be used as a substitute for professional medical advice, diagnosis, or treatment.</p>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 my-4">
+                        <p class="font-semibold text-yellow-800 mb-2">Please note:</p>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            <li>Always consult with a qualified healthcare provider for medical concerns</li>
+                            <li>Do not disregard professional medical advice based on this assessment</li>
+                            <li>Seek immediate medical attention for emergency situations</li>
+                            <li>This tool uses simplified calculations and may not account for all risk factors</li>
+                        </ul>
+                    </div>
+                    <p>By using this assessment, you acknowledge and agree to these terms.</p>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button onclick="acceptDisclaimer()" class="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                        I Understand and Agree
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        let disclaimerAccepted = localStorage.getItem('disclaimerAccepted') === 'true';
+        
+        // Show disclaimer on first visit
+        if (!disclaimerAccepted) {
+            document.getElementById('disclaimerModal').classList.remove('hidden');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close mobile menu when clicking links
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // BMI calculation
+        document.getElementById('height').addEventListener('input', calculateBMI);
+        document.getElementById('weight').addEventListener('input', calculateBMI);
+
+        function calculateBMI() {
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            if (height && weight) {
+                const bmi = (weight / Math.pow(height / 100, 2)).toFixed(1);
+                document.getElementById('bmi').value = bmi;
+            }
+        }
+
+        // Form submission
+        document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!disclaimerAccepted) {
+                document.getElementById('disclaimerModal').classList.remove('hidden');
+                return;
+            }
+            
+            calculateRisk();
+        });
+
+        // Risk calculation algorithm
+        function calculateRisk() {
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const bmi = parseFloat(document.getElementById('bmi').value);
+            const systolic = parseInt(document.getElementById('systolic').value);
+            const diastolic = parseInt(document.getElementById('diastolic').value);
+            const cholesterol = parseInt(document.getElementById('cholesterol').value);
+            const hdl = parseInt(document.getElementById('hdl').value);
+            const ldl = parseInt(document.getElementById('ldl').value);
+            const smoking = document.getElementById('smoking').value;
+            const exercise = parseInt(document.getElementById('exercise').value);
+            const alcohol = parseInt(document.getElementById('alcohol').value);
+            const diabetes = document.getElementById('diabetes').value;
+            const familyHistory = document.getElementById('familyHistory').value;
+            
+            let riskScore = 0;
+            let riskFactors = [];
+            let protectiveFactors = [];
+            
+            // Age risk
+            if (age > 65) {
+                riskScore += 20;
+                riskFactors.push('Age over 65');
+            } else if (age > 55) {
+                riskScore += 10;
+                riskFactors.push('Age over 55');
+            }
+            
+            // Gender risk
+            if (gender === 'male') {
+                riskScore += 5;
+            }
+            
+            // BMI risk
+            if (bmi > 30) {
+                riskScore += 15;
+                riskFactors.push('Obesity (BMI > 30)');
+            } else if (bmi > 25) {
+                riskScore += 8;
+                riskFactors.push('Overweight (BMI > 25)');
+            } else if (bmi < 18.5) {
+                riskScore += 5;
+                riskFactors.push('Underweight (BMI < 18.5)');
+            } else {
+                protectiveFactors.push('Healthy BMI');
+            }
+            
+            // Blood pressure risk
+            if (systolic > 140 || diastolic > 90) {
+                riskScore += 20;
+                riskFactors.push('High blood pressure');
+            } else if (systolic > 130 || diastolic > 80) {
+                riskScore += 10;
+                riskFactors.push('Elevated blood pressure');
+            } else {
+                protectiveFactors.push('Normal blood pressure');
+            }
+            
+            // Cholesterol risk
+            if (cholesterol > 240) {
+                riskScore += 15;
+                riskFactors.push('High total cholesterol');
+            } else if (cholesterol > 200) {
+                riskScore += 8;
+                riskFactors.push('Borderline high cholesterol');
+            }
+            
+            if (hdl < 40) {
+                riskScore += 10;
+                riskFactors.push('Low HDL (good cholesterol)');
+            } else if (hdl > 60) {
+                riskScore -= 5;
+                protectiveFactors.push('High HDL (good cholesterol)');
+            }
+            
+            if (ldl > 160) {
+                riskScore += 15;
+                riskFactors.push('High LDL (bad cholesterol)');
+            } else if (ldl > 130) {
+                riskScore += 8;
+                riskFactors.push('Borderline high LDL');
+            }
+            
+            // Smoking risk
+            if (smoking === 'current') {
+                riskScore += 25;
+                riskFactors.push('Current smoker');
+            } else if (smoking === 'former') {
+                riskScore += 10;
+                riskFactors.push('Former smoker');
+            } else {
+                protectiveFactors.push('Non-smoker');
+            }
+            
+            // Exercise benefit
+            if (exercise > 150) {
+                riskScore -= 10;
+                protectiveFactors.push('Regular exercise (>150 min/week)');
+            } else if (exercise > 75) {
+                riskScore -= 5;
+                protectiveFactors.push('Moderate exercise');
+            } else if (exercise < 30) {
+                riskScore += 10;
+                riskFactors.push('Sedentary lifestyle');
+            }
+            
+            // Alcohol risk
+            if (alcohol > 14) {
+                riskScore += 10;
+                riskFactors.push('Heavy alcohol consumption');
+            } else if (alcohol <= 7) {
+                riskScore -= 3;
+                protectiveFactors.push('Moderate alcohol use');
+            }
+            
+            // Diabetes risk
+            if (diabetes === 'yes') {
+                riskScore += 20;
+                riskFactors.push('Diabetes');
+            } else if (diabetes === 'prediabetes') {
+                riskScore += 10;
+                riskFactors.push('Prediabetes');
+            }
+            
+            // Family history risk
+            if (familyHistory === 'yes') {
+                riskScore += 15;
+                riskFactors.push('Family history of heart disease');
+            }
+            
+            // Ensure score is within bounds
+            riskScore = Math.max(0, Math.min(100, riskScore));
+            
+            // Determine risk level
+            let riskLevel, riskClass, riskMessage, nextCheckup;
+            
+            if (riskScore < 20) {
+                riskLevel = 'Low Risk';
+                riskClass = 'risk-low';
+                riskMessage = 'Excellent! Your heart disease risk is low. Continue maintaining your healthy lifestyle and regular check-ups.';
+                nextCheckup = 'Annual check-up recommended';
+            } else if (riskScore < 50) {
+                riskLevel = 'Moderate Risk';
+                riskClass = 'risk-medium';
+                riskMessage = 'You have some risk factors for heart disease. Consider making lifestyle changes and consult with your healthcare provider.';
+                nextCheckup = 'Check-up every 6 months';
+            } else {
+                riskLevel = 'High Risk';
+                riskClass = 'risk-high';
+                riskMessage = 'Your risk assessment indicates elevated risk. Please consult with a healthcare provider immediately for proper evaluation and management.';
+                nextCheckup = 'Immediate medical consultation advised';
+            }
+            
+            // Display results
+            displayResults(riskScore, riskLevel, riskClass, riskMessage, riskFactors, protectiveFactors, nextCheckup);
+        }
+
+        function displayResults(score, level, riskClass, message, riskFactors, protectiveFactors, nextCheckup) {
+            const resultsSection = document.getElementById('results');
+            const resultCard = document.getElementById('resultCard');
+            
+            // Update result card content
+            document.getElementById('riskScore').textContent = score + '%';
+            document.getElementById('riskLevel').textContent = level;
+            document.getElementById('riskMessage').textContent = message;
+            document.getElementById('riskFactors').textContent = riskFactors.length + ' identified';
+            document.getElementById('protectiveFactors').textContent = protectiveFactors.length + ' identified';
+            document.getElementById('nextCheckup').textContent = nextCheckup;
+            
+            // Update background gradient
+            resultCard.className = `rounded-2xl p-8 shadow-2xl text-white ${riskClass}`;
+            
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetAssessment() {
+            document.getElementById('assessmentForm').reset();
+            document.getElementById('bmi').value = '';
+            document.getElementById('results').classList.add('hidden');
+            scrollToSection('assessment');
+        }
+
+        function downloadResults() {
+            // Create a simple text report
+            const score = document.getElementById('riskScore').textContent;
+            const level = document.getElementById('riskLevel').textContent;
+            const message = document.getElementById('riskMessage').textContent;
+            
+            const report = `Heart Disease Risk Assessment Report
+=====================================
+Date: ${new Date().toLocaleDateString()}
+Risk Score: ${score}
+Risk Level: ${level}
+
+Assessment Summary:
+ ${message}
+
+This report was generated using the HeartGuard assessment tool.
+Remember: This is not a medical diagnosis. Please consult with a healthcare provider.
+
+HeartGuard - Your Heart Health Partner
+`;
+            
+            // Create download
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `heart-risk-assessment-${Date.now()}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Disclaimer functions
+        function closeDisclaimer() {
+            document.getElementById('disclaimerModal').classList.add('hidden');
+        }
+
+        function acceptDisclaimer() {
+            disclaimerAccepted = true;
+            localStorage.setItem('disclaimerAccepted', 'true');
+            document.getElementById('disclaimerModal').classList.add('hidden');
+        }
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('slide-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.hover-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
